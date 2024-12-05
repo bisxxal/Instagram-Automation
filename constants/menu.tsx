@@ -1,7 +1,10 @@
+import { Contact } from "lucide-react";
 import { AiTwotoneHome } from "react-icons/ai"; 
+import { FaSalesforce } from "react-icons/fa";
 import { IoMdAnalytics } from "react-icons/io"; 
 import { IoIosRocket } from "react-icons/io"; 
 import { IoSettingsOutline } from "react-icons/io5";
+import { PiInstagramLogoDuotone, PiRocketDuotone } from "react-icons/pi";
 import { v4 as uuid } from 'uuid'
   
   export type FieldProps = {
@@ -50,10 +53,10 @@ import { v4 as uuid } from 'uuid'
   
   export const PAGE_ICON: Props = {
     AUTOMATIONS: <IoMdAnalytics size={22}/>,
-    // CONTACTS: <ContactsDuoToneBlue />,
-    // INTEGRATIONS: <RocketDuoToneBlue />,
+    CONTACTS: <Contact />,
+    INTEGRATIONS: <PiRocketDuotone />,
     SETTINGS:<IoSettingsOutline size={22}/>,
-    HOME: <AiTwotoneHome  size={22}/>,
+    HOME: <AiTwotoneHome  fill="#273C95" size={22}/>,
   }
   
   export const PLANS = [
@@ -82,3 +85,28 @@ import { v4 as uuid } from 'uuid'
       cta: 'Upgrade Now',
     },
   ]
+ 
+type PropsForInte = {
+  title: string
+  icon: React.ReactNode
+  description: string
+  strategy: 'INSTAGRAM' | 'CRM'
+}
+
+export const INTEGRATION_CARDS: PropsForInte[] = [
+  {
+    title: 'Connect Instagram',
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices',
+    icon: <PiInstagramLogoDuotone size={26} fill="#3352CC" />,
+    strategy: 'INSTAGRAM',
+    
+  },
+  {
+    title: 'Connect Salesforce',
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices',
+    icon: <FaSalesforce  size={26} fill="#3352CC" />,
+    strategy: 'CRM',
+  },
+]

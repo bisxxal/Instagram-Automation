@@ -6,9 +6,12 @@ import Link from "next/link"
 import ClerkAuthState from "./ClerkAuthState"
 import { IoHelpCircle } from "react-icons/io5";
 import UpgradeCard from "./Upgrade"
-import { Menu } from "lucide-react"
+import { Bell, Menu, SearchIcon } from "lucide-react"
 import Sheet from "./Sheet"
 import CreateAutomation from "./CreateAutomation"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import MainBreadCrumb from "./MainBreadCrumb"
  
 const InfoBar = ({id}:{id:string}) => {
   const { page } = usePaths()
@@ -64,13 +67,25 @@ const InfoBar = ({id}:{id:string}) => {
             </Sheet>
           </span>
          {/* <Search /> */}
+         <div className="flex overflow-hidden gap-x-2 border-[1px] border-[#3352CC] rounded-full px-4 py-1 items-center flex-1">
+      <SearchIcon color="#3352CC" />
+      <Input
+        placeholder="Search by name, email or status"
+        className="border-none outline-none ring-0 focus:ring-0 flex-1"
+      />
+    </div>
           <CreateAutomation />
-         {/*   <Notifications /> */}
+          <Button className="bg-white rounded-full py-6">
+      <Bell
+        color="#3352CC"
+        fill="#3352CC"
+      />
+    </Button>
         </div>
-        {/* <MainBreadCrumb
+        <MainBreadCrumb
           page={page === id ? 'Home' : page}
           id={id}
-        /> */}
+        />
       </div>
     )
   )

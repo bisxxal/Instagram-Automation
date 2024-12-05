@@ -1,16 +1,9 @@
-// import {
-//     dehydrate,
-//     HydrationBoundary,
-//     QueryClient,
-//   } from '@tanstack/react-query' 
-//   import React from 'react'
-//   import {
-//     PrefetchUserAutnomations,
-//     PrefetchUserProfile,
-//   } from '@/react-query/prefetch'
+import { dehydrate, HydrationBoundary, QueryClient, } from '@tanstack/react-query'  
+   
 
 import InfoBar from "@/components/custom/InfoBar"
 import Sidebar from "@/components/custom/Sidebar"
+import { PrefetchUserAutnomations, PrefetchUserProfile } from '@/query/prefetch'
 
   
   type Props = {
@@ -21,14 +14,14 @@ import Sidebar from "@/components/custom/Sidebar"
   const Layout = async ({ children, params }: Props) => {
   
   
-    // const query = new QueryClient()
+    const query = new QueryClient()
   
-    // await PrefetchUserProfile(query)
+    await PrefetchUserProfile(query)
   
-    // await PrefetchUserAutnomations(query)
+    await PrefetchUserAutnomations(query)
   
     return (
-    //   <HydrationBoundary state={dehydrate(query)}>
+      <HydrationBoundary state={dehydrate(query)}>
         <div className="p-3">
           <Sidebar id={params.id} />
           <div
@@ -37,7 +30,7 @@ import Sidebar from "@/components/custom/Sidebar"
             {children}
           </div>
         </div>
-    //   </HydrationBoundary>
+      </HydrationBoundary>
     )
   }
   
