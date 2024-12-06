@@ -2,47 +2,28 @@
 import { usePaths } from '@/hooks/use-path'
 import { cn, getMonth } from '@/lib/utils'
 import Link from 'next/link'
-import React from 'react'
-import GradientButton from './GradientButton'
-import { Button } from '../ui/button'
+import React, { useMemo } from 'react'
+import GradientButton from '../GradientButton'
+import { Button } from '../../ui/button'
 import { useQueryAutomations } from '@/hooks/use-quries'
-import CreateAutomation from './CreateAutomation'
+import CreateAutomation from '../CreateAutomation'
+import { useMutationDataState } from '@/hooks/use-mutation-data'
 
 const AutomationList = () => {
     const {pathname} = usePaths()
 
     const {data} = useQueryAutomations()
-    // const optimisticUiData = {  
-    //     data: [
-    //         {
-    //             id: 1,
-    //             name: 'Automation 1',
-    //             keywords: [
-    //                 {
-    //                     id: 1,
-    //                     word: 'keyword1'
-    //                 },
-    //                 {
-    //                     id: 2,
-    //                     word: 'keyword2'
-    //                 }
-    //             ],
-    //             createdAt: new Date(),
-    //             listener: {
-    //                 listener: 'SMARTAI'
-    //             }
-    //         },
-    //         {
-    //             id: 2,
-    //             name: 'Automation 2',
-    //             keywords: [],
-    //             createdAt: new Date(),
-    //             listener: {
-    //                 listener: 'STANDARD'
-    //             }
-    //         }
-    //     ]
-    // } 
+
+    const {latestVariable} = useMutationDataState(['create-automation'])
+    const optimisticUiData = useMemo(() => {
+      if ((latestVariable && latestVariable?.variables &&  data)) {
+        const test = [latestVariable.variables, ...data.data]
+        return { data: test }
+      }
+      return data || { data: [] }
+    }, [latestVariable, data])
+  
+    
     if (data?.status !== 200 || data.data.length <= 0) {
       return (
         <div className="h-[70vh] flex justify-center items-center flex-col gap-y-3">
@@ -54,7 +35,7 @@ const AutomationList = () => {
 
   return (
     <div className="flex flex-col gap-y-3">
-      {optimisticUiData.data!.map((automation) => (
+       {Array.isArray(optimisticUiData.data) && optimisticUiData.data.map((automation:any) => (
         <Link
           href={`${pathname}/${automation.id}`}
           key={automation.id}
@@ -66,11 +47,11 @@ const AutomationList = () => {
               This is from the comment
             </p>
 
-            {automation.keywords.length > 0 ? (
+            {automation?.keywords?.length > 0 ? (
               <div className="flex gap-x-2 flex-wrap mt-3">
                 {
                   //@ts-ignore
-                  automation.keywords.map((keyword, key) => (
+                  automation?.keywords?.map((keyword, key) => (
                     <div
                       key={keyword.id}
                       className={cn(
@@ -98,11 +79,9 @@ const AutomationList = () => {
           </div>
           <div className="flex flex-col justify-between">
             <p className="capitalize text-sm font-light text-[#9B9CA0]">
-              {getMonth(automation.createdAt.getUTCMonth() + 1)}{' '}
-              {automation.createdAt.getUTCDate() === 1
-                ? `${automation.createdAt.getUTCDate()}st`
-                : `${automation.createdAt.getUTCDate()}th`}{' '}
-              {automation.createdAt.getUTCFullYear()}
+              {getMonth(automation?.createdAt?.getUTCMonth() + 1)}{' '}
+              {automation?.createdAt?.getUTCDate() === 1 ? `${automation?.createdAt?.getUTCDate()}st` : `${automation?.createdAt?.getUTCDate()}th`}{' '}
+              {automation?.createdAt?.getUTCFullYear()}
             </p>
 
             {automation.listener?.listener === 'SMARTAI' ? (

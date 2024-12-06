@@ -32,7 +32,7 @@ model Subscription {
 
 model Automation {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name         String
+  name         String    @default("Untitled")
   active    Boolean   @default(false)
 
   createdAt    DateTime @default(now())

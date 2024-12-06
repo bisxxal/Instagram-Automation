@@ -1,13 +1,14 @@
 'use client'
 import { ChevronRight, PencilIcon } from 'lucide-react' 
 import { Input } from '@/components/ui/input'
+import { useQueryAutomation } from '@/hooks/use-quries'
 
 type Props = {
   id: string
 }
 
 const AutomationsBreadCrumb = ({ id }: Props) => {
-//   const { data } = useQueryAutomation(id)
+  const { data } = useQueryAutomation(id)
 //   const { edit, enableEdit, inputRef, isPending } = useEditAutomation(id)
 
 //   const { latestVariable } = useMutationDataState(['update-automation'])

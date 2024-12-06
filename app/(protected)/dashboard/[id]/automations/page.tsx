@@ -1,5 +1,5 @@
 
-import AutomationList from '@/components/custom/AutomationList'
+import AutomationList from '@/components/custom/automations/AutomationList'
 import CreateAutomation from '@/components/custom/CreateAutomation'
 import { Check } from 'lucide-react'
 import React from 'react'
@@ -19,6 +19,7 @@ const Page = () => {
             </p>
           </div>
           <div className="flex flex-col gap-y-3">
+            {/* featch all auto mations here */}
             {[1, 2, 3].map((item) => (
               <div
                 key={item}

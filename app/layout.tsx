@@ -6,6 +6,7 @@ import {
 } from '@clerk/nextjs'
 import { ThemeProvider } from "@/provider/theme-provider";
 import ReactQueryProvider from "@/provider/react-query-provider";
+import { Toaster } from "react-hot-toast";
  
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -29,7 +30,10 @@ export default function RootLayout({
             disableTransitionOnChange
           > 
 
-         <ReactQueryProvider>{children}</ReactQueryProvider>
+         <ReactQueryProvider>
+          {children}
+          <Toaster />
+          </ReactQueryProvider>
         </ThemeProvider>
         </body>
     </html>
