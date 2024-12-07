@@ -1,6 +1,6 @@
-import { Contact } from "lucide-react";
+import { Contact, SendIcon } from "lucide-react";
 import { AiTwotoneHome } from "react-icons/ai"; 
-import { FaSalesforce } from "react-icons/fa";
+import { FaBrain, FaInstagram, FaSalesforce } from "react-icons/fa";
 import { IoMdAnalytics } from "react-icons/io"; 
 import { IoIosRocket } from "react-icons/io"; 
 import { IoSettingsOutline } from "react-icons/io5";
@@ -108,5 +108,56 @@ export const INTEGRATION_CARDS: PropsForInte[] = [
       'Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices',
     icon: <FaSalesforce  size={26} fill="#3352CC" />,
     strategy: 'CRM',
+  },
+]
+ 
+import { v4 } from 'uuid'
+
+export type AutomationListenerProps = {
+  id: string
+  label: string
+  icon: JSX.Element
+  description: string
+  type: 'SMARTAI' | 'MESSAGE'
+}
+export type AutomationsTriggerProps = {
+  id: string
+  label: string
+  icon: JSX.Element
+  description: string
+  type: 'COMMENT' | 'DM'
+}
+
+export const AUTOMATION_TRIGGERS: AutomationsTriggerProps[] = [ 
+  {
+    id: v4(),
+    label: 'User comments on my post',
+    icon: <FaInstagram />,
+    description: 'Select if you want to automate comments on your post',
+    type: 'COMMENT',
+  },
+  {
+    id: v4(),
+    label: 'User sends me a dm with a keyword',
+    icon: <FaInstagram />,
+    description: 'Select if you want to automate DMs on your profile',
+    type: 'DM',
+  },
+]
+
+export const AUTOMATION_LISTENERS: AutomationListenerProps[] = [
+  {
+    id: v4(),
+    label: 'Send the user a message',
+    icon: <SendIcon />,
+    description: 'Enter the message that you want to send the user.',
+    type: 'MESSAGE',
+  },
+  {
+    id: v4(),
+    label: 'Let Smart AI take over',
+    icon:<FaBrain />,
+    description: 'Tell AI about your project. (Upgrade to use this feature)',
+    type: 'SMARTAI',
   },
 ]

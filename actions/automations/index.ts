@@ -75,3 +75,25 @@ export const updateAutomationName = async(automationId:string , data:{name?:stri
         return {status:500 , data:'Internal server error'} 
     }
 }
+export const saveListener = async(automationId:string, listener:'SMARTAI' | 'MESSAGE' , prompt:string , reply?:string)=>{
+    await onCurrentUser()
+    try {
+        const create = await prisma.automation.update({
+            where:{id:automationId},
+            data:{
+                listener:{
+                    create:{
+                        listener,
+                        prompt,
+                        commentReply:reply
+                    }
+                }
+            }
+        })
+        if(create) return{status:200 , data:'Listiner created'}
+
+        return {status:404 , data:'error'} 
+    } catch (error) {
+        return {status:500 , data:'Internal server error'} 
+    }
+}
