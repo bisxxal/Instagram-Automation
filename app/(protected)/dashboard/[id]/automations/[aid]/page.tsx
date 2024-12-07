@@ -24,7 +24,7 @@ const page = async({params}:{params:{aid:string}}) => {
             <LucideMessageCircleWarning />
             When...
           </div>
-          <Trigger id={params.aid} />
+          {/* <Trigger id={params.aid} /> */}
         </div>
         {/* <ThenNode id={params.id} /> */}
         {/* <PostNode id={params.id} /> */}

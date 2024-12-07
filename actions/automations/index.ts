@@ -46,7 +46,7 @@ export const getAutomationInfo = async(id:string)=>{
                     integrations:true
                 }
             }
-        }
+        } 
     })
 
     if(automation){
@@ -56,4 +56,22 @@ export const getAutomationInfo = async(id:string)=>{
 } catch (error) {
     return {status:500}
  }
+}
+export const updateAutomationName = async(automationId:string , data:{name?:string , active?:boolean, automation?:string})=>{
+    await onCurrentUser()
+    try {
+        const update = await prisma.automation.update({
+            where:{id:automationId},
+            data:{
+                name:data.name,
+                active:data.active
+            }
+        })
+        
+        if(update) return {status:200 , data:'Automation succcessfull updated'}
+
+         return {status:404 , data:'error'} 
+    } catch (error) {
+        return {status:500 , data:'Internal server error'} 
+    }
 }

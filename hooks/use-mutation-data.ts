@@ -1,6 +1,6 @@
 import { MutationFunction, MutationKey, useMutation, useMutationState, useQueryClient } from "@tanstack/react-query";
 import toast from 'react-hot-toast'
-export const useMutatioinData = (mutationKey:MutationKey , mutationFn:MutationFunction , queryKey?:string, onSuccess?:()=>void)=>{
+export const useMutatioinData = (mutationKey:MutationKey , mutationFn:MutationFunction<any , any> , queryKey?:string, onSuccess?:()=>void)=>{
     const  client = useQueryClient()
     const {mutate , isPending} = useMutation({
         mutationKey,

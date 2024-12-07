@@ -7,6 +7,7 @@ import {
 import { ThemeProvider } from "@/provider/theme-provider";
 import ReactQueryProvider from "@/provider/react-query-provider";
 import { Toaster } from "react-hot-toast";
+import ReduxProvider from "@/provider/redux-provider";
  
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -30,10 +31,12 @@ export default function RootLayout({
             disableTransitionOnChange
           > 
 
+          <ReduxProvider >
          <ReactQueryProvider>
           {children}
           <Toaster />
           </ReactQueryProvider>
+          </ReduxProvider>
         </ThemeProvider>
         </body>
     </html>
