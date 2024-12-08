@@ -1,7 +1,7 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 import { onUserInfo } from '@/actions/user'
 import { getAllAutomations, getAutomationInfo } from "@/actions/automations";
-import { PiExport } from "react-icons/pi";
+
 const prefetch = async(client: QueryClient, action: QueryFunction, key: string )=>{
     return await client.prefetchQuery({
         queryKey: [key],

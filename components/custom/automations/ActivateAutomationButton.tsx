@@ -1,4 +1,6 @@
+import { activateAutomation } from '@/actions/automations'
 import { Button } from '@/components/ui/button'
+import { useMutatioinData } from '@/hooks/use-mutation-data'
 import { useQueryAutomation } from '@/hooks/use-quries'
 import { ActivitySquareIcon, Loader2 } from 'lucide-react'
 import React from 'react' 
@@ -9,7 +11,7 @@ type Props = {
 
 const ActivateAutomationButton = ({ id }: Props) => {
   const { data } = useQueryAutomation(id)
-  const { mutate, isPending } = useMutationData(
+  const { mutate, isPending } = useMutatioinData(
     ['activate'],
     (data: { state: boolean }) => activateAutomation(id, data.state),
     'automation-info'

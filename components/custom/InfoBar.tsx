@@ -12,6 +12,7 @@ import CreateAutomation from "./CreateAutomation"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import MainBreadCrumb from "./MainBreadCrumb"
+import { Separator } from "./Separator"
  
 const InfoBar = ({id}:{id:string}) => {
   const { page } = usePaths()
@@ -43,10 +44,10 @@ const InfoBar = ({id}:{id:string}) => {
   ))}
         </div>
         <div className="px-16">
-          {/* <Separator
+          <Separator
             orientation="horizontal"
             className="bg-[#333336]"
-          /> */}
+          />
         </div>
         <div className="px-3 flex flex-col gap-y-5">
           <div className="flex items-center gap-x-3">

@@ -5,7 +5,8 @@ export const updateIntegration =async(token:string, expire:Date,id:string)=>{
     return await prisma.integrations.update({
         where:{id},
         data:{
-            token,expireAt:expire
+            token,
+            expiresAt:expire
         }
     })
 }

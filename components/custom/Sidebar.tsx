@@ -6,6 +6,7 @@ import Link from "next/link"
 import ClerkAuthState from "./ClerkAuthState"
 import { IoHelpCircle } from "react-icons/io5";
 import UpgradeCard from "./Upgrade"
+import { Separator } from "./Separator"
  
 type Props = {
   id: string
@@ -35,10 +36,10 @@ const Sidebar = ({ id }: Props) => {
   ))}
         </div>
         <div className="px-16">
-          {/* <Separator
+          <Separator
             orientation="horizontal"
             className="bg-[#333336]"
-          /> */}
+          />
         </div>
         <div className="px-3 flex flex-col gap-y-5">
           <div className="flex items-center gap-x-3">

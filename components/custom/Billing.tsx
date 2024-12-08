@@ -1,14 +1,9 @@
-import React from 'react'
+'use client'
 import PaymentCard from './PaymentCard'
+import { useQueryUser } from '@/hooks/use-quries'
 
 const Billing = () => {
-  const data = {
-    data: {
-      subscription: {
-        plan: 'Basic'
-      }
-    }
-  };
+ const {data} = useQueryUser()
   return (
     <div className="flex lg:flex-row flex-col gap-5 w-full lg:w-10/12 xl:w-8/12 container">
       <PaymentCard

@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma"
 import { onCurrentUser } from "../user"
 import { CreateAutomation, getAutomations } from "./quries"
+import { findUser } from "../user"
 
 export const createAutomations = async(id?:string)=>{
     const user = await onCurrentUser()
@@ -95,5 +96,145 @@ export const saveListener = async(automationId:string, listener:'SMARTAI' | 'MES
         return {status:404 , data:'error'} 
     } catch (error) {
         return {status:500 , data:'Internal server error'} 
+    }
+}
+export const saveTrigger = async(automationId:string , trigger:string[])=>{
+    await onCurrentUser()
+    try {
+        if(trigger.length === 2){
+            const create = await prisma.automation.update({
+                where:{id:automationId},
+                data:{
+                    triggers:{
+                        createMany:{
+                            data:[{type:trigger[0]} , {type:trigger[1]}],
+                        },
+                    },
+                },
+            })
+            if(create) return{status:200 , data:'trigger created'}
+            return {status:404 , data:'Cannot save trigger'} 
+        }
+        else{
+            const create = await prisma.automation.update({
+                where:{id:automationId},
+                data:{
+                    triggers:{
+                        create:{
+                            type:trigger[0],
+                        },
+                    },
+                },
+            })
+            if(create) return{status:200 , data:'trigger created'}
+            return {status:404 , data:'Cannot save trigger'} 
+        }
+         
+    } catch (error) {
+        console.log('erorr in trigger ' , error);
+        
+        return {status:500 , data:'Internal server error'}
+    }
+}
+
+export const saveKeyword = async(id:string , keyword:string)=>{
+   await onCurrentUser()
+   try {
+    const create = await prisma.automation.update({
+        where:{id},
+        data:{
+            keywords:{
+                create:{
+                    word:keyword
+                }
+            }
+        }
+    })
+    if(create) return{status:200 , data:'keyword created'}
+    return {status:404 , data:'Cannot add this keyword'} 
+   } catch (error) {
+    console.log("error in saved keyword" , error);
+    return {status:500 , data:'Internal server error'}
+   }
+}
+
+export const deleteKeyword = async(id:string)=>{
+    await onCurrentUser()
+    try {
+        const deleteKeyword = await prisma.keyword.delete({
+            where:{id}
+        })
+        if(deleteKeyword) return{status:200 , data:'keyword deleted'}
+        return {status:404 , data:'Cannot delete this keyword'} 
+    } catch (error) {
+        return {status:500 , data:'Internal server error'}
+    }
+}
+
+export const getProfilePosts = async()=>{
+  const user = await onCurrentUser()
+    try {
+        const profile = await findUser(user?.id!)
+    const posts = await fetch(
+      `${process.env.INSTAGRAM_BASE_URL}/me/media?fields=id,caption,media_url,media_type,timestamp&limit=10&access_token=${profile?.integrations[0].token}`
+    )
+    const parsed = await posts.json()
+    if (parsed) return { status: 200, data: parsed }
+    console.log('🔴 Error in getting posts')
+    return { status: 404 }
+  } catch (error) {
+    console.log('🔴 server side Error in getting posts ', error)
+    return { status: 500 }
+    }
+} 
+
+export const savePosts = async(automationId:string , posts:{postid: string;
+    caption?: string;
+    media: string;
+    mediaType: "IMAGE" | "VIDEO" | "CAROSEL_ALBUM";
+}[])=>{
+    await onCurrentUser()
+    try {
+      const create = await prisma.automation.update({
+        where: { id: automationId },
+        data: {
+          posts: {
+            createMany: {
+              data: posts,
+            },
+          },
+        },
+      })
+  
+      if (create) return { status: 200, data: 'Posts attached' }
+  
+      return { status: 404, data: 'Automation not found' }
+    } catch (error) {
+        console.log('error in saving posts' , error);
+        
+      return { status: 500, data: 'Oops! something went wrong' }
+    }
+
+}
+
+export const activateAutomation = async(automationId:string , active:boolean)=>{
+    await onCurrentUser()
+    try {
+      const update = await prisma.automation.update({
+        where: { id: automationId },
+        data: {
+          active,
+        },
+      })
+      if (update)
+        return {
+          status: 200,
+          data: `Automation ${active ? 'activated' : 'disabled'}`,
+        }
+      return { status: 404, data: 'Automation not found' }
+    } catch (error) {
+        console.log('error in active automation' , error);
+        
+      return { status: 500, data: 'Oops! something went wrong' }
     }
 }

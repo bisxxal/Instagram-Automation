@@ -58,7 +58,7 @@ const ThenAction = ({id}:{id:string}) => {
           )
         )}
         <form
-          onSubmit={onFormSubmit}
+          onSubmit={onFormSubmit} 
           className="flex flex-col gap-y-2"
         >
           <Textarea

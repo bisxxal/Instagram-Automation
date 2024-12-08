@@ -4,6 +4,8 @@ import { LucideMessageCircleWarning } from 'lucide-react'
 import { getAutomationInfo } from '@/actions/automations' 
 import { PrefetchUserAutomation } from '@/query/prefetch'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import ThenNode from '@/components/custom/then/ThenNode'
+import PostNode from '@/components/custom/post/PostNode'
 
 export async function generateMetadata({params}:{params:{aid:string}}) {
   const info = await getAutomationInfo(params.aid)
@@ -26,8 +28,8 @@ const page = async({params}:{params:{aid:string}}) => {
           </div>
           <Trigger id={params.aid} />
         </div>
-        {/* <ThenNode id={params.id} /> */}
-        {/* <PostNode id={params.id} /> */}
+        <ThenNode id={params.aid} />
+        <PostNode id={params.aid} />
     </div>
     </HydrationBoundary>
   )

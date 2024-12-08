@@ -22,7 +22,7 @@ model User {
 
 model Subscription {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String @default("Untitled")
+  customerId String?           @unique
   plan       SUBSCRIPTION_PLAN @default(FREE)     
   createdAt    DateTime @default(now())
   active       Boolean @default(false)
@@ -87,8 +87,7 @@ model Listener{
 }
 model Trigger{
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  type String
-  triggerValue String 
+  type String 
   Automation Automation? @relation(fields: [automationId], references: [id] , onDelete: Cascade)  
   automationId String? @db.Uuid
 }

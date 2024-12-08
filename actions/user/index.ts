@@ -1,9 +1,11 @@
 'use server'
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
-import { createUser, findUser } from "./queries"
+import { createUser } from "./queries"
 import { refreshToken } from "@/lib/tokenFetch"
-import { updateIntegration } from "../integrations/queries"
+import { updateIntegration } from "../integrations/queries" 
+import prisma from "@/lib/prisma"
+import Stripe from "stripe"
  
 export const onCurrentUser = async () => {
   try {
@@ -15,7 +17,29 @@ export const onCurrentUser = async () => {
     
   }
   }
-  
+  export const findUser = async (clerkId:string) => {
+    try {
+        return await prisma.user.findUnique({   
+            where: {
+                clerkId
+            },
+            include: {
+                subscription: true,
+                integrations: {
+                  select: {
+                    id: true,
+                    token: true,
+                    expiresAt: true,
+                    name: true,
+                  },
+                },
+              },    
+        })
+
+    } catch (error) {
+        
+    }
+}
 export const onBoardUser =async()=>{
     const user = await onCurrentUser()
     try {  
@@ -65,3 +89,37 @@ export const onUserInfo = async()=>{
         return{status:500}
     }
 }
+
+export const onSubscribe = async(session_id:string)=>{
+    const user = await onCurrentUser()
+    try {
+        const stripe = new Stripe(process.env.STRIPE_CLIENT_SECRET as string)
+        const session  = await stripe.checkout.sessions.retrieve(session_id)
+        if(session){
+         
+            const subscribed = await prisma.user.update({
+                where: {
+                  clerkId:user?.id,
+                },
+                data: {
+                  subscription: {
+                    create: {
+                      // data: {
+                        customerId: session.customer as string,
+                        plan: 'PRO',
+                      // },
+                    },
+                  },
+                },
+              })
+    
+            if (subscribed) return { status: 200 }
+            return { status: 401 }
+          }
+          return { status: 404 }
+        } catch (error) {
+          console.log("error in onSubscribe server actions ",error);
+          
+          return { status: 500 }
+        }
+      }

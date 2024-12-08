@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+.blu{
+  background-color: #3352cc;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -132,14 +132,14 @@ export const AUTOMATION_TRIGGERS: AutomationsTriggerProps[] = [
   {
     id: v4(),
     label: 'User comments on my post',
-    icon: <FaInstagram />,
+    icon: <FaInstagram fill="#2E44A4" size={22} />,
     description: 'Select if you want to automate comments on your post',
     type: 'COMMENT',
   },
   {
     id: v4(),
     label: 'User sends me a dm with a keyword',
-    icon: <FaInstagram />,
+    icon: <FaInstagram  fill="#2E44A4" size={22}/>,
     description: 'Select if you want to automate DMs on your profile',
     type: 'DM',
   },
