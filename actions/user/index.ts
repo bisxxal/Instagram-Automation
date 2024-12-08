@@ -1,21 +1,17 @@
-'use server'
-import { currentUser } from "@clerk/nextjs/server"
+'use server' 
 import { redirect } from "next/navigation"
 import { createUser } from "./queries"
 import { refreshToken } from "@/lib/tokenFetch"
 import { updateIntegration } from "../integrations/queries" 
 import prisma from "@/lib/prisma"
 import Stripe from "stripe"
+import { currentUser } from "@clerk/nextjs/server"
  
 export const onCurrentUser = async () => {
-  try {
-      const user = await currentUser()
-      if (!user) return redirect('/sign-in')
-    
-      return user
-  } catch (error) {
-    
-  }
+  const user = await currentUser()
+  if (!user) return redirect('/sign-in')
+
+  return user
   }
   export const findUser = async (clerkId:string) => {
     try {

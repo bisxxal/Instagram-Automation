@@ -1,6 +1,4 @@
-//@ts-nocheck
 'use server'
-
 import prisma from "@/lib/prisma"
  
 export const CreateAutomation = async (clerkId: string, id?: string) => {
@@ -37,4 +35,23 @@ export const getAutomations = async(clerkId:string)=>{
       }
       }
      })
+}
+export const findAutomation = async (id: string) => {
+  return await prisma.automation.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      keywords: true,
+      triggers: true,
+      posts: true,
+      listener: true,
+      User: {
+        select: {
+          subscription: true,
+          integrations: true,
+        },
+      },
+    },
+  })
 }

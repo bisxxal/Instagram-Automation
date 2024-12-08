@@ -70,7 +70,7 @@ model Post {
   mediaType    MEDIATYPE @default(IMAGE)
   media     String
   caption      String?
-  // createdAt    DateTime @default(now())
+   postid       String
   Automation   Automation? @relation(fields: [automationId], references: [id])
   automationId String?     @db.Uuid
 }
@@ -82,7 +82,7 @@ model Listener{
   listener LISTENERS @default(MESSAGE)
   prompt String
   commentReply String?
-  dmReply Int @default(0)
+  dmCount Int @default(0)
   commentCount Int @default(0)
 }
 model Trigger{
