@@ -2,12 +2,10 @@ import Stripe from 'stripe'
 import { currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
-export const stripe = new Stripe(process.env.STRIPE_CLIENT_SECRET as string)
-
 export async function GET() {
 
  try {
-  //  const stripe = new Stripe(process.env.STRIPE_CLIENT_SECRET as string)
+   const stripe = new Stripe(process.env.STRIPE_CLIENT_SECRET as string)
    const user = await currentUser()
    if (!user) return NextResponse.json({ status: 404 })
  

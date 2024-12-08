@@ -12,7 +12,7 @@ async function main() {
       lastname: 'Doe',
       subscription: {
         create: {
-          name: 'Pro Plan',
+          // name: 'Pro Plan',
           plan: 'PRO',
           active: true,
         },
